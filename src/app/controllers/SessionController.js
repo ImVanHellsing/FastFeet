@@ -1,6 +1,9 @@
-import jjwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+
+// Models
 import User from '../models/User';
 
+// Config
 import authConfig from '../../config/auth';
 
 class SessionController {
@@ -9,15 +12,23 @@ class SessionController {
 
     const verifyUser = await User.findOne({ where: { email } });
 
+    /**
+     * Check and validate user data
+     */
+
     if (!verifyUser) {
-      return res.status(401).json({ error: 'User not found.' });
+      return res.status(401).json({ error: 'User not found!' });
     }
 
     if (!(await verifyUser.checkPassword(password))) {
-      return res.status(401).json({ error: 'Password does not match.' });
+      return res.status(401).json({ error: 'Password does not match!' });
     }
 
     const { id, name } = verifyUser;
+
+    /**
+     * Create and return Json-Web-Token to de front-end
+     */
 
     return res.json({
       user: {
@@ -25,7 +36,7 @@ class SessionController {
         name,
         email,
       },
-      token: jjwt.sign({ id }, authConfig.secret, {
+      token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });

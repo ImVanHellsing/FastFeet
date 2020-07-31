@@ -1,4 +1,4 @@
-/////INSTALLATION
+=====>INSTALLATION<=====
 ///Sequelize -> yarn add sequelize --save
 ///Postgres -> yarn add --save pg pg-hstore
 ///Bcryptjs -> yarn add bcryptjs
@@ -8,11 +8,20 @@
 ///Jsonwebtoken -> yarn add jsonwebtoken
 ///Yup -> yarn add yup
 
-/////DEV
+====>DEV
 ///Nodemon -> yarn add nodemon -D
 ///Sucrase -> yarn add sucrase -D
 
 TALVEZ FALTE O MODULO "pg": "^8.2.1",
 
-//Eslint FIX
+===>Eslint FIX
 yarn eslint --fix src --ext .js
+
+
+
+===>SEQUELIZE COMMANDS
+yarn sequelize db:seed:all
+
+=>then
+
+yarn sequelize db:migrate
