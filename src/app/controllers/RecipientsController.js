@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 // Models
-import User from '../models/User';
 import Recipient from '../models/Recipient';
 
 class RecipientsController {
@@ -55,7 +54,7 @@ class RecipientsController {
      */
 
     try {
-      const recipients = await Recipient.findAll();
+      const recipients = await Recipient.findAll(); 
 
       if (!recipients) {
         return res.status(404).json({ message: 'Recipients not found!' });
@@ -63,6 +62,7 @@ class RecipientsController {
 
       return res.json(recipients);
     } catch (error) {
+      
       console.log(`Error= ${error}`);
       return res.status(500).json({ error: 'Internal server occurred!' });
     }
@@ -122,7 +122,7 @@ class RecipientsController {
     // Deleting
     await Recipient.destroy({ where: { id } });
 
-    // Returning a simple info about the recently deleted data
+    // Returning a simple info about the recent deleted data
     return res.json({
       message: `ID=${id} => '${data.street} nº ${data.number}, ${data.complement} to ${data.name}' was successfully deleted!`,
     });

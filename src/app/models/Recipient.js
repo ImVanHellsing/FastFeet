@@ -11,8 +11,7 @@ class Recipient extends Model {
         uf: Sequelize.STRING,
         city: Sequelize.STRING,
         cep: Sequelize.STRING,
-      },
-      {
+      },{
         sequelize,
       }
     );
