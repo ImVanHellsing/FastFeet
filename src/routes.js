@@ -20,8 +20,9 @@ routes.get('/user', UserController.index);
 routes.post('/sessions', SessionController.store);
 
 // Deliver Management
-routes.get('/deliveryman/:id/deliveries', DeliverManagementController.index);
 routes.get('/deliveryman/:id/handled', DeliverManagementController.show);
+routes.get('/deliveryman/:id/deliveries', DeliverManagementController.index);
+routes.put('/deliveryman/:id/end_order/:order_id', DeliverManagementController.update);
 
 // Middleware usage (Adm authentication require)
 routes.use(authMiddleware);
