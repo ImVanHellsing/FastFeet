@@ -15,15 +15,15 @@ class Order extends Model {
         startable: {
           type: Sequelize.VIRTUAL,
           get() {
-            // const currentDateTime = new Date()
-            // const currentYear = currentDateTime.getFullYear
-            // const currentMonth = currentDateTime.getMonth
-            // const currentDay = currentDateTime.getDay
+            const currentDateTime = new Date()
+            const currentYear = currentDateTime.getFullYear()
+            const currentMonth = currentDateTime.getMonth()
+            const currentDay = currentDateTime.getDate()
 
             return isWithinInterval(new Date, { 
-              //Testing
-              start: new Date(2020, 7, 10, 8, 0, 0, 0), 
-              end: new Date(2020, 7, 10, 20, 0, 0, 0) 
+              //wWorking
+              start: new Date(currentYear, currentMonth, currentDay, 8, 0, 0, 0), 
+              end: new Date(currentYear, currentMonth, currentDay, 16, 0, 0, 0) 
             })
           }
         }

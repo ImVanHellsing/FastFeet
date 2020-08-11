@@ -2,6 +2,11 @@ import * as Yup from 'yup';
 
 // Models
 import Order from '../models/Order';
+import Deliver from '../models/Deliver';
+import Recipient from '../models/Recipient';
+
+//Lib
+import Mail from '../../lib/Mail'
 
 class OrderController {
   async store(req, res) {
@@ -13,7 +18,6 @@ class OrderController {
       product: Yup.string().required(),
       recipient_id: Yup.number().required(),
       deliveryman_id: Yup.number().required(),
-      signature_id: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -26,9 +30,30 @@ class OrderController {
      * Destructuring and returning the validated User Data
      */
 
-    const data = await Order.create(req.body);
+    const { id } = await Order.create(req.body)
 
-    return res.json(data);
+    const order = await Order.findByPk(id, {
+      include: [
+        {
+          model: Deliver,
+          as: 'deliver',
+          attributes: ['id', 'name','email']
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['name', 'street', 'number', 'complement']
+        },
+      ],
+    });
+
+    await Mail.sendMail({
+      to: `${order.deliver.name} <${order.deliver.email}>`,
+      subject: 'Nova entrega para retirada',
+      text: `${order.deliver.name}, você tem uma nova entrega destinada o/a ${order.recipient.name}, no endereço ${order.recipient.street} ${order.recipient.number} / ${order.recipient.complement}.`
+    })
+    
+    return res.json(order);
   }
 
   async index(req, res) {

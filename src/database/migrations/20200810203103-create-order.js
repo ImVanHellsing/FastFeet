@@ -13,7 +13,6 @@ module.exports = {
       },
       signature_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
       },
       recipient_id: {
         type: Sequelize.INTEGER,

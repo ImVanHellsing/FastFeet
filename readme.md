@@ -6,6 +6,7 @@
 ///Eslint -> yarn add eslint
 ///Eslint Config -> yarn add prettier eslint-config-prettier eslint-plugin-prettier -D
 ///Jsonwebtoken -> yarn add jsonwebtoken
+///Nodemailer -> yarn add nodemailer
 ///Date-fns -> yarn add date-fns
 ///Yup -> yarn add yup
 
@@ -13,11 +14,10 @@
 ///Nodemon -> yarn add nodemon -D
 ///Sucrase -> yarn add sucrase -D
 
-<!-- TALVEZ FALTE O MODULO "pg": "^8.2.1", -->
-
 ===>Eslint FIX
 yarn eslint --fix src --ext .js
 
 ===>SEQUELIZE COMMANDS
 yarn sequelize db:seed:all
 yarn sequelize db:migrate
+yarn sequelize migration:generate --name [migration-name]
