@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 // Controllers
+import DeliverManagementController from './app/controllers/DeliverManagementController';
 import RecipientsController from './app/controllers/RecipientsController';
 import DeliversController from './app/controllers/DeliversController';
 import SessionController from './app/controllers/SessionController';
@@ -17,6 +18,10 @@ routes.get('/user', UserController.index);
 
 // Login and authentication
 routes.post('/sessions', SessionController.store);
+
+// Deliver Management
+routes.get('/deliveryman/:id/deliveries', DeliverManagementController.index);
+routes.get('/deliveryman/:id/handled', DeliverManagementController.show);
 
 // Middleware usage (Adm authentication require)
 routes.use(authMiddleware);
