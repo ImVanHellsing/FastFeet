@@ -8,8 +8,9 @@ import User from '../app/models/User';
 import Order from '../app/models/Order';
 import Deliver from '../app/models/Deliver';
 import Recipient from '../app/models/Recipient';
+import OrderProblem from '../app/models/OrderProblem';
 
-const Models = [User, Order, Recipient, Deliver];
+const Models = [ User, Order, Recipient, Deliver, OrderProblem ];
 
 class DatabaseConnection {
   constructor() {
@@ -18,7 +19,7 @@ class DatabaseConnection {
 
   init() {
 
-    //Starts de connection
+    //Starts the connection
     this.connection = new Sequelize(databaseConfig);
 
     // Initialize all models with the connection and the associations

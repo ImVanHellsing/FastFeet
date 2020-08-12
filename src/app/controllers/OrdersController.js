@@ -30,7 +30,7 @@ class OrderController {
      * Destructuring and returning the validated User Data
      */
 
-    const { id } = await Order.create(req.body)
+    const { id, product } = await Order.create(req.body)
 
     const order = await Order.findByPk(id, {
       include: [
@@ -50,7 +50,7 @@ class OrderController {
     await Mail.sendMail({
       to: `${order.deliver.name} <${order.deliver.email}>`,
       subject: 'Nova entrega para retirada',
-      text: `${order.deliver.name}, você tem uma nova entrega destinada o/a ${order.recipient.name}, no endereço ${order.recipient.street} ${order.recipient.number} / ${order.recipient.complement}.`
+      text: `${order.deliver.name}, você tem uma nova entrega, '${product}', destinada o/a ${order.recipient.name}, no endereço ${order.recipient.street} ${order.recipient.number} / ${order.recipient.complement}.`
     })
     
     return res.json(order);

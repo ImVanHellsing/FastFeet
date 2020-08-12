@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 // Controllers
 import DeliverManagementController from './app/controllers/DeliverManagementController';
+import OrderProblemsController from './app/controllers/OrderProblemsController';
 import RecipientsController from './app/controllers/RecipientsController';
 import DeliversController from './app/controllers/DeliversController';
 import SessionController from './app/controllers/SessionController';
@@ -23,6 +24,14 @@ routes.post('/sessions', SessionController.store);
 routes.get('/deliveryman/:id/handled', DeliverManagementController.show);
 routes.get('/deliveryman/:id/deliveries', DeliverManagementController.index);
 routes.put('/deliveryman/:id/end_order/:order_id', DeliverManagementController.update);
+
+// Order Problems
+routes.get('/orders/:order_problem_id/problems', OrderProblemsController.show);
+routes.post('/orders/problems', OrderProblemsController.store);
+routes.get('/orders/problems', OrderProblemsController.index);
+
+// Cancel Order
+routes.put('/problem/:problem_id/cancel_order', OrderProblemsController.update);
 
 // Middleware usage (Adm authentication require)
 routes.use(authMiddleware);
