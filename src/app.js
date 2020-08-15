@@ -1,8 +1,14 @@
 import express from 'express';
+
+//Env
+import 'dotenv/config';
+
+//Routes
 import routes from './routes';
 
 // DB Connection
 import './database/connection';
+
 
 class App {
   constructor() {
