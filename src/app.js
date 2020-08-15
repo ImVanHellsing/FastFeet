@@ -1,14 +1,14 @@
-import express from 'express';
-
 //Env
 import 'dotenv/config';
+
+import express from 'express';
+import path from 'path'
 
 //Routes
 import routes from './routes';
 
-// DB Connection
-import './database/connection';
-
+//DataBase Connection
+import './database';
 
 class App {
   constructor() {
@@ -20,6 +20,8 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use('/files', 
+      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
   }
 
   routes() {

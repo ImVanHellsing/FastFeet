@@ -13,6 +13,12 @@ module.exports = {
       },
       signature_id: {
         type: Sequelize.INTEGER,
+        references: {
+            model: 'files',
+            key: 'id'
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
       },
       recipient_id: {
         type: Sequelize.INTEGER,

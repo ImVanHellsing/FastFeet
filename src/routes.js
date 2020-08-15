@@ -1,4 +1,8 @@
 import { Router } from 'express';
+import multer from 'multer'
+
+//Configs
+import multerConfig from './config/multer'
 
 // Controllers
 import DeliverManagementController from './app/controllers/DeliverManagementController';
@@ -8,17 +12,20 @@ import DeliversController from './app/controllers/DeliversController';
 import SessionController from './app/controllers/SessionController';
 import OrdersController from './app/controllers/OrdersController';
 import UserController from './app/controllers/UserController';
+import FileController from './app/controllers/FileController';
 
 // Middlewares
 import authMiddleware from './app/middlewares/auth';
 
 const routes = Router();
+const upload = multer(multerConfig);
 
 // ADM (Only for testing)
 routes.get('/user', UserController.index);
 
-// Login and authentication
-routes.post('/sessions', SessionController.store);
+// Uploads Storage route
+routes.get('/files', FileController.index);
+routes.post('/files', upload.single('file'), FileController.store);
 
 // Deliver Management
 routes.get('/deliveryman/:id/handled', DeliverManagementController.show);
@@ -33,7 +40,10 @@ routes.get('/orders/problems', OrderProblemsController.index);
 // Cancel Order
 routes.put('/problem/:problem_id/cancel_order', OrderProblemsController.update);
 
-// Middleware usage (Adm authentication require)
+// Login and authentication
+routes.post('/sessions', SessionController.store);
+
+// Middleware usage (Adm authentication required in Bearer Token)
 routes.use(authMiddleware);
 
 // Recipients

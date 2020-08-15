@@ -39,6 +39,16 @@ class DeliverManagementController {
 
     const { id, order_id } = req.params
     const { signature_id } = req.query
+
+    /**
+     * Check if the order exists
+     */
+
+    const checkedOrder = await Order.findByPk(order_id)
+
+    if(!checkedOrder) {
+      return res.status(401).json({ error: `This order doesn't exists!`})  
+    }
     
     /**
      * Check if the order_id belongs to the provided DeliveryMan
@@ -63,11 +73,11 @@ class DeliverManagementController {
       return res.status(401).json({ warning: `You can't manage a already canceled order!`})
     }
 
+    let pickups = 0
+    
     /**
      * Check if is there any signature_id on query params
      */
-
-    let pickups = 0
 
     //If there's no signature_id we try to PICK UP an order
     if(!signature_id) {
@@ -77,12 +87,13 @@ class DeliverManagementController {
       } 
 
       //Not working yet
-      if(pickups>= 5) {
-        return res.status(400).json({ warning: `You've already picked up 5 orders today, try again tomorrow!`})
-      }
+      // if(pickups>= 5) {
+      //   return res.status(400).json({ warning: `You've already picked up 5 orders today, try again tomorrow!`})
+      // }
+
+      // pickups++
 
       order.start_date = new Date()
-      pickups++
 
       console.log(pickups);
 
@@ -92,7 +103,7 @@ class DeliverManagementController {
     }
 
     /**
-     * You can only END UP a order if it been already PICKED UP
+     * You can only END UP an order if it been already PICKED UP
      */
 
     if(order.start_date === null) {
@@ -104,9 +115,10 @@ class DeliverManagementController {
     }
     
     /**
-     * Saving the end_date to the order
+     * Saving the end_date and the signature_id to the order
      */
 
+    order.signature_id = signature_id
     order.end_date = new Date()
 
     await order.save()
